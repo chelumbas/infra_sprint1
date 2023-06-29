@@ -1,0 +1,88 @@
+# TASKI
+server {
+	server_name 158.160.12.45 ya-taski.ddns.net;
+
+	location /api/ {
+        	proxy_pass http://127.0.0.1:8000;
+    	}
+
+	location /admin/ {
+		proxy_pass http://127.0.0.1:8000;	
+	}
+
+	location / {
+		root   /var/www/taski;
+        	index  index.html index.htm;
+        	try_files $uri /index.html;
+	}
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ya-kittygram.ddns.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ya-kittygram.ddns.net/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+
+# KITTYGRAM 
+server {
+        server_name 158.160.12.45 ya-kittygram.ddns.net;
+
+	location /media/ {
+        	alias /var/www/kittygram/media/;
+   	 }	
+
+
+        location /api/ {
+                proxy_pass http://127.0.0.1:8080;
+        }
+
+        location /admin/ {
+                proxy_pass http://127.0.0.1:8080;
+        }
+
+        location / {
+                root   /var/www/kittygram;
+                index  index.html index.htm;
+                try_files $uri /index.html;
+        }
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ya-kittygram.ddns.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ya-kittygram.ddns.net/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+}
+        
+
+server {
+    if ($host = ya-kittygram.ddns.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+        server_name 158.160.12.45 ya-kittygram.ddns.net;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
+
+server {
+    if ($host = ya-taski.ddns.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+	server_name 158.160.12.45 ya-taski.ddns.net;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
