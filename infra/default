@@ -18,10 +18,11 @@ server {
 
 
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/ya-kittygram.ddns.net/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/ya-kittygram.ddns.net/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ya-taski.ddns.net/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ya-taski.ddns.net/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
 
 }
 
@@ -50,26 +51,11 @@ server {
         }
 
 
-
     listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/ya-kittygram.ddns.net/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/ya-kittygram.ddns.net/privkey.pem; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/ya-kittygram.ddns.net-0001/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/ya-kittygram.ddns.net-0001/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
-
-}
-        
-
-server {
-    if ($host = ya-kittygram.ddns.net) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-        server_name 158.160.12.45 ya-kittygram.ddns.net;
-    listen 80;
-    return 404; # managed by Certbot
 
 
 }
@@ -80,9 +66,22 @@ server {
     } # managed by Certbot
 
 
-	server_name 158.160.12.45 ya-taski.ddns.net;
+    server_name 158.160.12.45 ya-taski.ddns.net;
     listen 80;
     return 404; # managed by Certbot
 
 
 }
+
+server {
+    if ($host = ya-kittygram.ddns.net) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name 158.160.12.45 ya-kittygram.ddns.net;
+    listen 80;
+    return 404; # managed by Certbot
+
+}
+
